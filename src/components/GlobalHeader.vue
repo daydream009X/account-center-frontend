@@ -56,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useLoginUserStore } from '@/stores/useLoginUserStore'
 
@@ -79,9 +79,9 @@ const indexRouteMap: Record<string, string> = {
   '4': '/admin/userManage',
 }
 
-const activeIndex = computed(() => routeIndexMap[route.path] || '1')
+const activeIndex = ref(routeIndexMap[route.path] || '1')
 
-const handleSelect = ({ key }: { key: string }) => {
+const handleSelect = (key: string) => {
   if (indexRouteMap[key]) {
     router.push(indexRouteMap[key])
   }
@@ -89,7 +89,11 @@ const handleSelect = ({ key }: { key: string }) => {
 </script>
 
 <style scoped>
-/* 顶部导航栏左侧部分 */
+#globalHeader {
+  height: 100%;
+}
+
+/* 一、顶部导航栏左侧部分 */
 .header-left {
   flex-shrink: 0;
   display: flex;
@@ -104,7 +108,7 @@ const handleSelect = ({ key }: { key: string }) => {
   color: var(--custom-text-main);
 }
 
-/* 顶部导航栏中间部分 */
+/* 二、顶部导航栏中间部分 */
 .header-center {
   flex: 1;
   overflow: hidden;
@@ -117,6 +121,19 @@ const handleSelect = ({ key }: { key: string }) => {
 
 .header-center .el-menu-demo {
   width: 100%;
+}
+
+/* 三、顶部导航栏右侧部分 */
+.header-right {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.header-login-btn {
+  height: 44px;
+  padding: 0 28px;
+  font-size: 17px;
 }
 
 .el-menu-item.footer-text-dreamscape,
@@ -132,18 +149,5 @@ const handleSelect = ({ key }: { key: string }) => {
 .el-menu-item.footer-text-dreamscape:hover a {
   color: #7c5ce0 !important;
   background-color: transparent !important;
-}
-
-/* 顶部导航栏右侧部分 */
-.header-right {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-}
-
-.header-login-btn {
-  height: 44px;
-  padding: 0 28px;
-  font-size: 17px;
 }
 </style>

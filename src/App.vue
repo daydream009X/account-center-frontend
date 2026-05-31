@@ -14,8 +14,4 @@ const loginUserStore = useLoginUserStore()
 loginUserStore.fetchLoginUser()
 </script>
 
-<style scoped>
-#app {
-  height: 100%;
-}
-</style>
+<style scoped></style>

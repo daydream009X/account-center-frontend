@@ -1,73 +1,41 @@
-/* main.css - 主题变量与全局布局样式 */
-
-/* ==========================================================================
-   1. 白日做梦（Minimalist Dreamscape）主题 - 默认应用或激活 theme-dreamscape 时
-   ========================================================================== */
+/* 一、白日做梦主题 */
+/* 1.主题色彩 */
 :root,
 body.theme-dreamscape {
-  /* Element Plus 核心品牌颜色重写 (采用低饱和度、不刺眼的梦幻色系) */
-  --el-color-primary: #74b9ff !important; /* 主色调：低饱和灰粉蓝（如登录按钮、核心操作） */
+  --el-color-primary: #74b9ff !important;
   --el-color-primary-light-3: #9ecaff !important;
   --el-color-primary-light-5: #bad7ff !important;
   --el-color-primary-light-7: #d7e8ff !important;
   --el-color-primary-light-9: #f0f6ff !important;
   --el-color-primary-dark-2: #5497e0 !important;
 
-  --el-color-success: #a3b18a !important; /* 成功状态/特殊文本：柔和鼠尾草绿 */
-  --el-color-warning: #ffeaa7 !important; /* 警告状态：淡雅香草黄 */
-  --el-color-danger: #ff7675 !important; /* 危险状态/删除：温润蜜桃粉红 */
-  --el-color-info: #a29bfe !important; /* 激活/高光状态：梦境薰衣草紫 */
+  --el-color-success: #a3b18a !important;
+  --el-color-warning: #ffeaa7 !important;
+  --el-color-danger: #ff7675 !important;
+  --el-color-info: #a29bfe !important;
 
-  /* 页面级自适应背景与文本变量 */
-  --custom-bg-page: #faf8f5; /* 页面大背景：温暖舒适的极淡奶油白 */
-  --custom-bg-header: #ececed; /* 顶栏与底栏背景：极淡雾灰过渡色 */
-  --custom-bg-card: #ffffff; /* 内容卡片/表格背景：纯白 */
-  --custom-text-main: #4f5b66; /* 主要文字：柔和石墨深灰（替代刺眼纯黑） */
-  --custom-text-secondary: #8e9aaf; /* 次要/提示文字 */
-  --custom-border-color: #e5e5e5; /* 边框及分割线颜色 */
+  /* 2.页面背景 */
+  --custom-bg-page: #f2f0f8;
+  --custom-bg-header: #e8e0f5;
+  --custom-bg-card: #ffffff;
 
-  /* 映射并覆盖 Element Plus 基础结构变量 */
+  /* 页面内容最大宽度 */
+  --layout-max-width: 90%;
+
+  /* 3.文本色彩 */
+  --custom-text-main: #4f5b66;
+  --custom-text-secondary: #8e9aaf;
+  --custom-border-color: #e5e5e5;
+
+  /* 4.覆盖element色彩 */
   --el-bg-color: #faf8f5 !important;
   --el-text-color-primary: #4f5b66 !important;
   --el-text-color-regular: #6b7785 !important;
   --el-border-color-light: #ececed !important;
 }
 
-/* ==========================================================================
-   2. IKUN（爱坤）主题 - 当 body 标签挂载 .theme-ikun 类名时激活
-   ========================================================================== */
-body.theme-ikun {
-  /* Element Plus 核心品牌颜色重写 (经典中性高级灰黑 + 稳重黄高光) */
-  --el-color-primary: #545c64 !important; /* 主色调：高级中性深邃灰（背带裤质感） */
-  --el-color-primary-light-3: #767d84 !important;
-  --el-color-primary-light-5: #999fa4 !important;
-  --el-color-primary-light-7: #bcbfc3 !important;
-  --el-color-primary-light-9: #e6e7e8 !important;
-  --el-color-primary-dark-2: #3f454b !important;
-
-  --el-color-success: #a3b18a !important;
-  --el-color-warning: #f1c40f !important; /* 警告/高光状态：应援姬霓金黄 */
-  --el-color-danger: #e74c3c !important;
-  --el-color-info: #909399 !important;
-
-  /* 页面级自适应背景与文本变量 */
-  --custom-bg-page: #f4f5f7; /* 页面大背景：冷灰色调 */
-  --custom-bg-header: #ffffff; /* 纯白干净顶栏 */
-  --custom-bg-card: #ffffff;
-  --custom-text-main: #2c3e50; /* 主要文字：深邃蓝灰 */
-  --custom-text-secondary: #7f8c8d;
-  --custom-border-color: #dcdfe6;
-
-  /* 映射并覆盖 Element Plus 基础结构变量 */
-  --el-bg-color: #f4f5f7 !important;
-  --el-text-color-primary: #2c3e50 !important;
-  --el-text-color-regular: #4f6174 !important;
-  --el-border-color-light: #dcdfe6 !important;
-}
-
-/* ==========================================================================
-   3. 联动三段式经典布局与 Element Plus 优化
-   ========================================================================== */
+/* 二、上中下布局 */
+/* 1.body 基础样式 */
 body {
   background-color: var(--custom-bg-page);
   color: var(--custom-text-main);
@@ -77,22 +45,26 @@ body {
     border-color 0.3s;
 }
 
-/* 标准上中下布局容器 */
+/* 2. 标准上中下布局容器 */
 .layout-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* 顶部导航栏布局样式 */
+/* 3. 顶部导航栏布局样式 */
 .layout-header {
   background-color: var(--custom-bg-header);
   border-bottom: 1px solid var(--custom-border-color);
   padding: 0 24px;
-  height: 80px;
+  width: 100%;
+  max-width: var(--layout-max-width);
+  height: 100px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  border-radius: 8px;
   transition:
     background-color 0.3s,
     border-color 0.3s;
@@ -106,16 +78,16 @@ body {
   overflow: hidden;
 }
 
-/* 中间主内容区域布局样式 */
+/* 4. 中间主内容区域布局样式 */
 .layout-main {
   flex: 1;
   padding: 24px;
-  max-width: 1200px;
+  max-width: var(--layout-max-width);
   width: 100%;
   margin: 0 auto;
 }
 
-/* 底部页脚布局样式 */
+/* 5. 底部页脚布局样式 */
 .layout-footer {
   height: 60px;
   display: flex;
@@ -129,18 +101,7 @@ body {
     border-color 0.3s;
 }
 
-body.theme-ikun .footer-text-dreamscape {
-  color: var(--el-color-primary); /* IKUN主题下自动切换为中性灰主色调 */
-}
-
-.el-menu-item.footer-text-dreamscape:focus,
-.el-menu-item.footer-text-dreamscape a:focus,
-.el-menu-item.footer-text-dreamscape:focus-visible,
-.el-menu-item.footer-text-dreamscape a:focus-visible {
-  outline: none !important;
-}
-
-/* 通用高级卡片（非常适合用于包裹登录/注册框、CRUD表格，让布局更精致） */
+/* 6. 通用卡片样式*/
 .custom-card {
   background-color: var(--custom-bg-card);
   border: 1px solid var(--custom-border-color);
@@ -151,35 +112,14 @@ body.theme-ikun .footer-text-dreamscape {
     background-color 0.3s,
     border-color 0.3s;
 }
-
-/* ==========================================================================
-   4. Element Plus 组件无缝融合与微调
-   ========================================================================== */
-/* 适配 el-menu 导航栏，使其完美隐藏默认白底并读取我们的主题变量 */
+/* 三、element组件样式改变 */
+/* 1. 适配 el-menu 导航栏，隐藏默认白底 */
 .el-menu {
   background-color: transparent !important;
   border-bottom: none !important;
 }
-.el-menu-item {
-  color: var(--custom-text-main) !important;
-  font-size: 16px !important;
-}
-.el-menu-item:hover {
-  background-color: rgba(0, 0, 0, 0.02) !important;
-}
 
-/* 顶栏活动项高光逻辑切换 */
-.el-menu-item.is-active {
-  color: var(--el-color-info) !important; /* 白日做梦主题激活时呈淡淡的薰衣草紫 */
-  border-bottom-color: var(--el-color-info) !important;
-  font-weight: bold;
-}
-body.theme-ikun .el-menu-item.is-active {
-  color: var(--el-color-warning) !important; /* IKUN主题激活时呈高级应援金黄 */
-  border-bottom-color: var(--el-color-warning) !important;
-}
-
-/* 微调 Element 输入框与表格，使整体对比度不过于刺眼 */
+/* 2. 输入框样式改变 */
 .el-input__wrapper {
   box-shadow: 0 0 0 1px var(--custom-border-color) inset !important;
 }
