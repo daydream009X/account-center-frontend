@@ -46,10 +46,10 @@
     </div>
     <div class="header-right">
       <div v-if="loginUserStore.loginUser.id">
-        {{ loginUserStore.loginUser.username ? loginUserStore.loginUser.username : '陌生用户' }}
+        {{ loginUserStore.loginUser.username ? loginUserStore.loginUser.username : `${userName}` }}
       </div>
       <div v-else>
-        <el-button type="primary" class="header-login-btn">登录</el-button>
+        <el-button type="primary" class="header-login-btn" @click="router.push('/user/login')">登录</el-button>
       </div>
     </div>
   </div>
@@ -80,6 +80,8 @@ const indexRouteMap: Record<string, string> = {
 }
 
 const activeIndex = ref(routeIndexMap[route.path] || '1')
+
+const userName: string = `用户` + Math.floor(Math.random() * 10000)
 
 const handleSelect = (key: string) => {
   if (indexRouteMap[key]) {

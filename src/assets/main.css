@@ -121,10 +121,24 @@ body {
 
 /* 2. 输入框样式改变 */
 .el-input__wrapper {
-  box-shadow: 0 0 0 1px var(--custom-border-color) inset !important;
+  border-radius: 8px !important;
+  box-shadow: 0 0 0 1px #d5cdf0 inset !important;
+  background-color: #faf9ff !important;
+  transition:
+    box-shadow 0.35s ease,
+    background-color 0.35s ease !important;
 }
+
+.el-input__wrapper:hover {
+  box-shadow: 0 0 0 1px #bfb3e8 inset !important;
+  background-color: #f6f3ff !important;
+}
+
 .el-input__wrapper.is-focus {
-  box-shadow: 0 0 0 1px var(--el-color-primary) inset !important;
+  box-shadow:
+    0 0 0 1px var(--el-color-primary) inset,
+    0 0 8px rgba(116, 185, 255, 0.25) !important;
+  background-color: #ffffff !important;
 }
 .el-table {
   --el-table-border-color: var(--custom-border-color) !important;

@@ -4,6 +4,9 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
+// 全局权限校验
+import '@/access'
+
 //引入icon图标
 import '@/assets/iconfont/iconfont.js'
 
