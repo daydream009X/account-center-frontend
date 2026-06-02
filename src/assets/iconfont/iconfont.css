@@ -1,6 +1,6 @@
 @font-face {
   font-family: "iconfont"; /* Project id  */
-  src: url('iconfont.ttf?t=1780210858166') format('truetype');
+  src: url('iconfont.ttf?t=1780391885050') format('truetype');
 }
 
 .iconfont {
@@ -9,6 +9,10 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-taiyang:before {
+  content: "\e611";
 }
 
 .icon-xiaolian:before {
@@ -21,6 +25,10 @@
 
 .icon-zhuye:before {
   content: "\e605";
+}
+
+.icon-yueliang:before {
+  content: "\e6a2";
 }
 
 .icon-Sam:before {

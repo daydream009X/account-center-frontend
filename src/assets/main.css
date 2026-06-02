@@ -1,4 +1,4 @@
-/* 一、白日做梦主题 */
+/* 一、白日做梦主题 默认主题 */
 /* 1.主题色彩 */
 :root,
 body.theme-dreamscape {
@@ -119,6 +119,11 @@ body {
   border-bottom: none !important;
 }
 
+.el-menu-item {
+  color: var(--custom-text-main) !important;
+  font-size: 17px !important;
+}
+
 /* 2. 输入框样式改变 */
 .el-input__wrapper {
   border-radius: 8px !important;
@@ -143,4 +148,64 @@ body {
 .el-table {
   --el-table-border-color: var(--custom-border-color) !important;
   --el-table-header-bg-color: var(--custom-bg-page) !important;
+}
+
+/* 四、暗夜模式 */
+html.theme-dark {
+  --el-color-primary: #74b9ff !important;
+  --el-color-primary-light-3: #5497d8 !important;
+  --el-color-primary-light-5: #3d7abf !important;
+  --el-color-primary-light-7: #2a5c9e !important;
+  --el-color-primary-light-9: #1d427a !important;
+  --el-color-primary-dark-2: #9ccdff !important;
+
+  --el-color-success: #8fb464 !important;
+  --el-color-warning: #d4c070 !important;
+  --el-color-danger: #d4706e !important;
+  --el-color-info: #8c86e0 !important;
+
+  --custom-bg-page: #1a1a2e;
+  --custom-bg-header: #1e1e38;
+  --custom-bg-card: #242442;
+
+  --custom-text-main: #cdd6f4;
+  --custom-text-secondary: #9394b8;
+  --custom-border-color: #32325a;
+
+  --el-bg-color: #1e1e38 !important;
+  --el-text-color-primary: #cdd6f4 !important;
+  --el-text-color-regular: #b0b2d4 !important;
+  --el-border-color-light: #32325a !important;
+}
+
+html.theme-dark .el-input__wrapper {
+  box-shadow: 0 0 0 1px #3d3d6b inset !important;
+  background-color: #252545 !important;
+}
+
+html.theme-dark .el-input__wrapper:hover {
+  box-shadow: 0 0 0 1px #5555a0 inset !important;
+  background-color: #2a2a50 !important;
+}
+
+html.theme-dark .el-input__wrapper.is-focus {
+  box-shadow:
+    0 0 0 1px var(--el-color-primary) inset,
+    0 0 8px rgba(116, 185, 255, 0.15) !important;
+  background-color: #2a2a50 !important;
+}
+
+html.theme-dark .custom-card {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+html.theme-dark .layout-header {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+}
+
+html.theme-dark .el-table {
+  --el-table-border-color: var(--custom-border-color) !important;
+  --el-table-header-bg-color: #1e1e38 !important;
+  --el-table-tr-bg-color: #242442 !important;
+  --el-table-row-hover-bg-color: #2a2a52 !important;
 }

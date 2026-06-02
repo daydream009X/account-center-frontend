@@ -7,6 +7,12 @@ import { ElMessage } from 'element-plus'
  */
 router.beforeEach(async (to, from, next) => {
   const loginUserStore = useLoginUserStore()
+
+  // 确保用户信息已从后端拉取
+  if (!loginUserStore.loginUser.id) {
+    await loginUserStore.fetchLoginUser()
+  }
+
   const loginUser = loginUserStore.loginUser
   const toUrl = to.fullPath
   if (toUrl.startsWith('/admin')) {

@@ -40,25 +40,53 @@
           <svg class="icon" aria-hidden="true">
             <use href="#icon-xiaolian"></use>
           </svg>
-          <a href="https://www.mydaydream.top" target="_blank"> 白日做梦 </a>
+          <a href="https://www.mydaydream.top" target="_blank" @click.stop> 白日做梦 </a>
         </el-menu-item>
       </el-menu>
     </div>
     <div class="header-right">
-      <div v-if="loginUserStore.loginUser.id">
-        {{ loginUserStore.loginUser.username ? loginUserStore.loginUser.username : `${userName}` }}
+      <button class="theme-toggle-btn" @click="toggleTheme">
+        <svg v-if="isDark" class="icon" aria-hidden="true">
+          <use href="#icon-taiyang"></use>
+        </svg>
+        <svg v-else class="icon" aria-hidden="true">
+          <use href="#icon-yueliang"></use>
+        </svg>
+      </button>
+      <div v-if="loginUserStore.loginUser.id" class="header-user-info">
+        <el-dropdown trigger="click" @command="doLogout">
+          <div class="header-user-trigger">
+            <img
+              v-if="loginUserStore.loginUser.avatarUrl"
+              :src="String(loginUserStore.loginUser.avatarUrl)"
+              class="header-avatar"
+              alt="头像"
+            />
+            <span>{{
+              loginUserStore.loginUser.username ? loginUserStore.loginUser.username : `${userName}`
+            }}</span>
+          </div>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item command="logout">退出登录</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </div>
       <div v-else>
-        <el-button type="primary" class="header-login-btn" @click="router.push('/user/login')">登录</el-button>
+        <el-button type="primary" class="header-login-btn" @click="router.push('/user/login')"
+          >登录</el-button
+        >
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useLoginUserStore } from '@/stores/useLoginUserStore'
+import { userLogout } from '@/api/user'
 
 const router = useRouter()
 const route = useRoute()
@@ -81,12 +109,47 @@ const indexRouteMap: Record<string, string> = {
 
 const activeIndex = ref(routeIndexMap[route.path] || '1')
 
+watch(
+  () => route.path,
+  (path) => {
+    activeIndex.value = routeIndexMap[path] || '1'
+  },
+)
+
+const isDark = ref(false)
+
+const applyTheme = () => {
+  document.documentElement.classList.toggle('theme-dark', isDark.value)
+}
+
+const toggleTheme = () => {
+  isDark.value = !isDark.value
+  applyTheme()
+  localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
+}
+
+onMounted(() => {
+  const saved = localStorage.getItem('theme')
+  if (saved === 'dark') {
+    isDark.value = true
+    applyTheme()
+  }
+})
+
 const userName: string = `用户` + Math.floor(Math.random() * 10000)
 
 const handleSelect = (key: string) => {
   if (indexRouteMap[key]) {
     router.push(indexRouteMap[key])
+  } else {
+    activeIndex.value = routeIndexMap[route.path] || '1'
   }
+}
+
+const doLogout = async () => {
+  await userLogout({})
+  loginUserStore.setLoginUser({ username: '未登录' })
+  router.push('/user/login')
 }
 </script>
 
@@ -125,19 +188,6 @@ const handleSelect = (key: string) => {
   width: 100%;
 }
 
-/* 三、顶部导航栏右侧部分 */
-.header-right {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-}
-
-.header-login-btn {
-  height: 44px;
-  padding: 0 28px;
-  font-size: 17px;
-}
-
 .el-menu-item.footer-text-dreamscape,
 .el-menu-item.footer-text-dreamscape a {
   color: #97b462 !important;
@@ -151,5 +201,63 @@ const handleSelect = (key: string) => {
 .el-menu-item.footer-text-dreamscape:hover a {
   color: #7c5ce0 !important;
   background-color: transparent !important;
+}
+
+/* 三、顶部导航栏右侧部分 */
+.header-right {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.theme-toggle-btn {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--custom-border-color);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--custom-text-main);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.3s,
+    border-color 0.3s,
+    color 0.3s;
+  flex-shrink: 0;
+}
+
+.theme-toggle-btn:hover {
+  background-color: var(--custom-bg-page);
+}
+
+.header-user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+}
+
+.header-user-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.header-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--custom-border-color);
+}
+
+.header-login-btn {
+  height: 44px;
+  padding: 0 28px;
+  font-size: 17px;
 }
 </style>
