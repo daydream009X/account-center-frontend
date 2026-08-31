@@ -1,5 +1,23 @@
 import myAxios from '@/request'
 
+export type UserType = {
+  id: number
+  username?: string
+  userAccount?: string
+  avatarUrl?: string
+  gender?: number
+  phone?: string
+  email?: string
+  userStatus?: number
+  userRole?: number
+  createTime?: string
+}
+
+export type UserUpdateParams = Pick<
+  UserType,
+  'id' | 'username' | 'avatarUrl' | 'gender' | 'phone' | 'email' | 'userStatus' | 'userRole'
+>
+
 /**
  * 用户注册
  * @param params
@@ -72,5 +90,16 @@ export const deleteUser = async (id: string) => {
     headers: {
       'Content-Type': 'application/json',
     },
+  })
+}
+
+/**
+ * 更新用户信息
+ */
+export const updateUser = async (params: UserUpdateParams) => {
+  return myAxios.request({
+    url: '/api/user/update',
+    method: 'POST',
+    data: params,
   })
 }

@@ -12,7 +12,7 @@
 | UI 组件库 | Element Plus（全局 CSS 变量主题深度定制）    |
 | 路由      | Vue Router 5                               |
 | HTTP 请求 | Axios（请求/响应拦截器 + 环境切换）          |
-| 状态管理  | Pinia                                      |
+| 状态管理  | Pinia（登录用户状态与权限信息）              |
 | 代码规范  | ESLint + Prettier + Oxlint                 |
 
 ## 项目结构
@@ -20,7 +20,7 @@
 ```
 src/
 ├── api/                # API 接口封装
-│   └── user.ts         # 用户相关：登录/注册/登出/搜索/删除
+│   └── user.ts         # 用户相关：登录/注册/登出/搜索/更新/删除
 ├── assets/             # 静态资源
 │   ├── main.css        # 主题样式（CSS 变量 + 亮暗双模式）
 │   ├── base.css        # 基础样式
@@ -37,7 +37,7 @@ src/
 ├── views/              # 页面视图
 │   ├── HomeView.vue        # 首页
 │   ├── admin/
-│   │   └── UserManageView.vue  # 管理员：用户列表/搜索/删除
+│   │   └── UserManageView.vue  # 管理员：用户列表/搜索/编辑/删除
 │   └── user/
 │       ├── UserLoginView.vue     # 登录页
 │       └── UserRegisterView.vue  # 注册页
@@ -59,7 +59,10 @@ src/
 
 - 用户列表展示（ID、用户名、账号、头像、性别、创建时间、角色）
 - 按用户名搜索
-- 删除用户
+- 编辑用户资料（用户名、头像、性别、电话、邮箱、角色与状态）
+- 基于 Element Plus FormRules 和自定义 validator 完成字段校验
+- 更新、删除操作防重复提交，完成后按当前搜索条件刷新列表
+- 删除用户，并禁止管理员删除当前登录账号
 - 性别与角色使用 Element Plus Tag 标签区分展示
 
 ### 权限控制
@@ -67,8 +70,8 @@ src/
 - 三层权限防护：
   - Pinia Store 管理登录用户状态与角色
   - Vue Router `beforeEach` 路由守卫拦截未授权访问 `/admin/*`
-  - Axios 响应拦截器全局捕获 401 并自动跳转登录页（携带 `redirect` 参数实现登录后回跳）
-- 401 无限重定向防护：区分"获取当前用户"接口与其他接口的 401，避免死循环
+  - Axios 响应拦截器全局捕获未登录业务码并自动跳转登录页（携带 `redirect` 参数实现登录后回跳）
+- 登录跳转循环防护：区分"获取当前用户"接口与其他接口的未登录响应，避免重复跳转
 
 ### 主题定制
 
