@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref, shallowRef } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, shallowRef } from 'vue'
 import * as echarts from 'echarts/core'
 import { LineChart, PieChart } from 'echarts/charts'
 import { GridComponent, LegendComponent, TooltipComponent } from 'echarts/components'
@@ -279,6 +279,10 @@ onMounted(async () => {
     { name: '管理员', value: adminCount },
   ]
 
+  // 先渲染图表容器（v-else 依赖 loading 为 false），再初始化图表
+  loading.value = false
+  await nextTick()
+
   if (trendChartRef.value) trendChart.value = echarts.init(trendChartRef.value)
   if (genderChartRef.value) genderChart.value = echarts.init(genderChartRef.value)
   if (roleChartRef.value) roleChart.value = echarts.init(roleChartRef.value)
@@ -286,8 +290,6 @@ onMounted(async () => {
 
   window.addEventListener('resize', handleResize)
   themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
-
-  loading.value = false
 })
 
 onBeforeUnmount(() => {
