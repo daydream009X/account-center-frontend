@@ -6,7 +6,7 @@
       </el-header>
       <el-main class="layout-main"><router-view></router-view></el-main>
       <el-footer class="layout-footer footer-text-dreamscape">
-        <a href="https://www.mydaydream.top" target="_blank"> 小梦用户中心 by 白日做梦 </a>
+        <a href="https://www.mydaydream.top" target="_blank"> 统一账号权限管理平台 by 白日做梦 </a>
       </el-footer>
     </el-container>
   </div>

@@ -8,7 +8,7 @@
 const msg = `<svg class="icon" aria-hidden="true">
                 <use href="#icon-xiaolian"></use>
             </svg>
-            欢迎来到小梦用户中心!
+            欢迎来到统一账号权限管理平台!
             <svg class="icon" aria-hidden="true">
               <use href="#icon-xiaolian"></use>
             </svg>`

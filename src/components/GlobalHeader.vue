@@ -2,7 +2,7 @@
   <div id="globalHeader" class="layout-header">
     <div class="header-left">
       <img style="width: 50px" src="@/assets/logo.png" alt="logo" />
-      <span class="header-logo-text">小梦用户中心</span>
+      <span class="header-logo-text">统一账号权限管理平台</span>
     </div>
     <div class="header-center">
       <el-menu
