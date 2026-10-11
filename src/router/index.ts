@@ -4,6 +4,7 @@ import HomeView from '@/views/HomeView.vue'
 import UserLoginView from '@/views/user/UserLoginView.vue'
 import UserRegisterView from '@/views/user/UserRegisterView.vue'
 import UserManageView from '@/views/admin/UserManageView.vue'
+import DashboardView from '@/views/admin/DashboardView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -20,6 +21,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/user/register',
     name: 'userRegister',
     component: UserRegisterView,
+  },
+  {
+    path: '/admin/dashboard',
+    name: 'adminDashboard',
+    component: DashboardView,
   },
   {
     path: '/admin/userManage',

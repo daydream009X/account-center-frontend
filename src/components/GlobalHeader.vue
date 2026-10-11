@@ -30,13 +30,19 @@
           </svg>
           <span>用户注册</span>
         </el-menu-item>
-        <el-menu-item index="4">
+        <el-menu-item v-if="isAdmin" index="4">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 20V10h3v10H4zm6.5 0V4h3v16h-3zM17 20v-7h3v7h-3z" />
+          </svg>
+          <span>数据看板</span>
+        </el-menu-item>
+        <el-menu-item v-if="isAdmin" index="5">
           <svg class="icon" aria-hidden="true">
             <use href="#icon-huiyuanhuangguan"></use>
           </svg>
           <span>用户管理</span>
         </el-menu-item>
-        <el-menu-item index="5" class="footer-text-dreamscape">
+        <el-menu-item index="6" class="footer-text-dreamscape">
           <svg class="icon" aria-hidden="true">
             <use href="#icon-xiaolian"></use>
           </svg>
@@ -83,7 +89,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue'
+import { computed, ref, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useLoginUserStore } from '@/stores/useLoginUserStore'
 import { userLogout } from '@/api/user'
@@ -93,18 +99,23 @@ const route = useRoute()
 
 const loginUserStore = useLoginUserStore()
 
+// 是否为管理员（控制管理端菜单入口显隐）
+const isAdmin = computed(() => loginUserStore.loginUser.userRole === 1)
+
 const routeIndexMap: Record<string, string> = {
   '/': '1',
   '/user/login': '2',
   '/user/register': '3',
-  '/admin/userManage': '4',
+  '/admin/dashboard': '4',
+  '/admin/userManage': '5',
 }
 
 const indexRouteMap: Record<string, string> = {
   '1': '/',
   '2': '/user/login',
   '3': '/user/register',
-  '4': '/admin/userManage',
+  '4': '/admin/dashboard',
+  '5': '/admin/userManage',
 }
 
 const activeIndex = ref(routeIndexMap[route.path] || '1')
