@@ -11,7 +11,7 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/my-user-center/',
+  base: '/account-center/',
   plugins: [
     vue(),
     vueDevTools(),

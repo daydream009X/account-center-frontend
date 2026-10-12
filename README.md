@@ -6,7 +6,7 @@
 
 ## 二、在线演示
 
-- 演示地址：<https://www.mydaydream.top/my-user-center/>
+- 演示地址：<https://www.mydaydream.top/account-center/>
 - 截图：（此处放置平台首页 / 数据看板截图）
 
 > 测试账号：管理员账号 `admin`（密码不随仓库公开，如需体验请联系部署者开通测试账号）。
