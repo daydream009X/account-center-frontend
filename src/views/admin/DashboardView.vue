@@ -255,8 +255,12 @@ const fetchData = async () => {
   }
 }
 
+// 防止请求未返回时组件已卸载，后续逻辑在游离 DOM 上初始化图表、泄漏监听
+let isUnmounted = false
+
 onMounted(async () => {
   await fetchData()
+  if (isUnmounted) return
 
   const now = new Date()
   const trend = buildTrend(users.value, now)
@@ -282,6 +286,7 @@ onMounted(async () => {
   // 先渲染图表容器（v-else 依赖 loading 为 false），再初始化图表
   loading.value = false
   await nextTick()
+  if (isUnmounted) return
 
   if (trendChartRef.value) trendChart.value = echarts.init(trendChartRef.value)
   if (genderChartRef.value) genderChart.value = echarts.init(genderChartRef.value)
@@ -293,6 +298,7 @@ onMounted(async () => {
 })
 
 onBeforeUnmount(() => {
+  isUnmounted = true
   window.removeEventListener('resize', handleResize)
   themeObserver.disconnect()
   trendChart.value?.dispose()
