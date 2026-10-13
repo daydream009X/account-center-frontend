@@ -83,7 +83,6 @@ const pad = (n: number) => String(n).padStart(2, '0')
 const formatDateKey = (date: Date) =>
   `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`
 
-// createTime 由后端 Date 序列化而来，兼容字符串与毫秒时间戳两种格式
 const toTimestamp = (createTime: string | number | undefined): number | null => {
   if (createTime === undefined || createTime === null || createTime === '') return null
   const ts = typeof createTime === 'number' ? createTime : Date.parse(createTime)
@@ -137,7 +136,7 @@ const buildTrend = (list: UserType[], now: Date) => {
   return { labels, daily, cumulative }
 }
 
-// 从全局 CSS 变量读取亮 / 暗两套主题配色
+// 从全局 CSS 变量读取两套主题配色
 const getThemeColors = () => {
   const style = getComputedStyle(document.documentElement)
   const css = (name: string) => style.getPropertyValue(name).trim()
