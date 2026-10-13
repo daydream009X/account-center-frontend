@@ -14,7 +14,7 @@
     >
       <el-form-item label="账号" prop="userAccount">
         <el-input
-          v-model="form.userAccount"
+          v-model.trim="form.userAccount"
           type="text"
           autocomplete="off"
           placeholder="请输入账号"

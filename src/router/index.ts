@@ -3,6 +3,7 @@ import type { RouteRecordRaw } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import UserLoginView from '@/views/user/UserLoginView.vue'
 import UserRegisterView from '@/views/user/UserRegisterView.vue'
+import UserProfileView from '@/views/user/UserProfileView.vue'
 import UserManageView from '@/views/admin/UserManageView.vue'
 import DashboardView from '@/views/admin/DashboardView.vue'
 
@@ -21,6 +22,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/user/register',
     name: 'userRegister',
     component: UserRegisterView,
+  },
+  {
+    path: '/user/profile',
+    name: 'userProfile',
+    component: UserProfileView,
   },
   {
     path: '/admin/dashboard',

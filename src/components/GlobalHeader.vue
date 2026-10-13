@@ -60,7 +60,7 @@
         </svg>
       </button>
       <div v-if="loginUserStore.loginUser.id" class="header-user-info">
-        <el-dropdown trigger="click" @command="doLogout">
+        <el-dropdown trigger="click" @command="handleUserCommand">
           <div class="header-user-trigger">
             <img
               v-if="loginUserStore.loginUser.avatarUrl"
@@ -74,6 +74,7 @@
           </div>
           <template #dropdown>
             <el-dropdown-menu>
+              <el-dropdown-item command="profile">个人资料</el-dropdown-item>
               <el-dropdown-item command="logout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </template>
@@ -161,6 +162,16 @@ const doLogout = async () => {
   await userLogout({})
   loginUserStore.setLoginUser({ username: '未登录' })
   router.push('/user/login')
+}
+
+const handleUserCommand = async (command: string) => {
+  if (command === 'profile') {
+    router.push('/user/profile')
+    return
+  }
+  if (command === 'logout') {
+    await doLogout()
+  }
 }
 </script>
 

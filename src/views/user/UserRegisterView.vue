@@ -13,7 +13,7 @@
       @submit.prevent
     >
       <el-form-item label="账号" prop="userAccount">
-        <el-input v-model="form.userAccount" autocomplete="off" placeholder="请输入账号" />
+        <el-input v-model.trim="form.userAccount" autocomplete="off" placeholder="请输入账号" />
       </el-form-item>
 
       <el-form-item label="密码" prop="userPassword">
@@ -34,10 +34,6 @@
           autocomplete="off"
           placeholder="请再次输入密码"
         />
-      </el-form-item>
-
-      <el-form-item label="编号" prop="planetCode">
-        <el-input v-model="form.planetCode" autocomplete="off" placeholder="请输入编号" />
       </el-form-item>
 
       <el-form-item class="item-button">
@@ -63,7 +59,6 @@ const form = reactive({
   userAccount: '',
   userPassword: '',
   checkPassword: '',
-  planetCode: '',
 })
 
 type ValidatorFn = NonNullable<FormItemRule['validator']>
@@ -96,19 +91,10 @@ const validateCheckPassword: ValidatorFn = (rule, value, callback) => {
   }
 }
 
-const validatePlanetCode: ValidatorFn = (rule, value, callback) => {
-  if (value === '') {
-    callback(new Error('请输入编号'))
-  } else {
-    callback()
-  }
-}
-
 const rules = reactive<FormRules<typeof form>>({
   userAccount: [{ validator: validateUserAccount, trigger: 'blur' }],
   userPassword: [{ validator: validateUserPassword, trigger: 'blur' }],
   checkPassword: [{ validator: validateCheckPassword, trigger: 'blur' }],
-  planetCode: [{ validator: validatePlanetCode, trigger: 'blur' }],
 })
 
 const handleSubmit = (formEl: FormInstance | undefined) => {
@@ -118,8 +104,13 @@ const handleSubmit = (formEl: FormInstance | undefined) => {
       return
     }
     try {
-      const res = await userRegister(form)
-      if (res.data.code === 0 && res.data.data) {
+      // 注册时生成默认用户名，随请求保存到后端（用户之后可在「个人资料」中修改）
+      const res = await userRegister({
+        ...form,
+        username: `用户${Math.floor(Math.random() * 10000)}`,
+      })
+      // 注册成功时 data 为新用户 id（正整数）；失败时后端可能返回 -1，不能被当作成功
+      if (res.data.code === 0 && Number(res.data.data) > 0) {
         ElMessage.success('注册成功')
         router.push({
           path: '/user/login',

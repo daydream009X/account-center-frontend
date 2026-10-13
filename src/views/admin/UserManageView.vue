@@ -65,8 +65,17 @@
         <el-form-item label="用户名" prop="username">
           <el-input v-model="editForm.username" maxlength="256" show-word-limit />
         </el-form-item>
-        <el-form-item label="头像地址" prop="avatarUrl">
-          <el-input v-model="editForm.avatarUrl" maxlength="1024" />
+        <el-form-item label="头像" prop="avatarUrl">
+          <AvatarSelect v-model="editForm.avatarUrl" />
+        </el-form-item>
+        <el-form-item label="密码" prop="userPassword">
+          <el-input
+            v-model="editForm.userPassword"
+            type="password"
+            show-password
+            autocomplete="off"
+            placeholder="留空则不修改（不少于 8 位）"
+          />
         </el-form-item>
         <el-form-item label="性别">
           <el-select v-model="editForm.gender" placeholder="未设置" style="width: 100%">
@@ -105,6 +114,7 @@ import { computed, nextTick, reactive, ref } from 'vue'
 import { deleteUser, searchUsers, updateUser, type UserType, type UserUpdateParams } from '@/api/user'
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
 import { useLoginUserStore } from '@/stores/useLoginUserStore'
+import AvatarSelect from '@/components/AvatarSelect.vue'
 
 const data = ref<UserType[]>([])
 
@@ -123,6 +133,7 @@ const editForm = reactive<UserUpdateParams>({
   email: '',
   userStatus: 0,
   userRole: 0,
+  userPassword: undefined,
 })
 
 const isEditingSelf = computed(() => Number(loginUserStore.loginUser.id) === editForm.id)
@@ -135,6 +146,14 @@ const emailValidator = (_rule: unknown, value: string, callback: (error?: Error)
   callback(new Error('请输入正确的邮箱地址'))
 }
 
+const passwordValidator = (_rule: unknown, value: string, callback: (error?: Error) => void) => {
+  if (!value || value.length >= 8) {
+    callback()
+    return
+  }
+  callback(new Error('密码不能少于 8 位'))
+}
+
 const editRules: FormRules = {
   username: [{ max: 256, message: '用户名不能超过 256 个字符', trigger: 'blur' }],
   avatarUrl: [{ max: 1024, message: '头像地址不能超过 1024 个字符', trigger: 'blur' }],
@@ -143,6 +162,7 @@ const editRules: FormRules = {
     { max: 512, message: '邮箱不能超过 512 个字符', trigger: 'blur' },
     { validator: emailValidator, trigger: 'blur' },
   ],
+  userPassword: [{ validator: passwordValidator, trigger: 'blur' }],
 }
 
 const getErrorMessage = (
@@ -185,6 +205,8 @@ const onEdit = async (user: UserType) => {
   editForm.email = user.email ?? ''
   editForm.userStatus = user.userStatus ?? 0
   editForm.userRole = user.userRole ?? 0
+  // 密码不回显，每次打开弹窗都清空（留空表示不修改）
+  editForm.userPassword = undefined
   editVisible.value = true
   await nextTick()
   editFormRef.value?.clearValidate()
