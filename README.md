@@ -78,8 +78,7 @@ src/                              # 前端源码目录
 - 顶部统计卡片：总用户数 / 管理员数 / 普通用户数 / 今日新增
 - 用户增长趋势折线图（按创建日期聚合，近 N 天自适应数据跨度）
 - 性别分布、角色分布饼图
-- 数据来自现有用户列表接口，纯前端聚合计算（map / reduce），零后端改动
-- 亮 / 暗双主题适配，随全局主题一键切换
+- 数据来自现有用户列表接口，纯前端聚合计算（map / reduce）
 
 ## 五、技术要点
 
@@ -90,12 +89,13 @@ src/                              # 前端源码目录
 - **SVG Symbol 图标双主题适配**：图标采用 SVG Symbol 方案，通过 CSS `color` / `fill: currentColor` 控制颜色，亮暗切换时无需替换资源。
 - **ECharts 按需引入**：仅注册 LineChart、PieChart 与 Grid / Tooltip / Legend 等必要组件，配合 `unplugin` 系列插件按需自动导入，有效控制打包体积。
 - **图表主题联动**：数据看板通过 MutationObserver 监听 `html.theme-dark` 类名变化，主题切换时从 CSS 变量读取配色重新渲染图表；`init` 置于 `onMounted`、`dispose` 置于 `onBeforeUnmount`，并监听窗口 resize，杜绝内存泄漏。
+- **工程化：**TypeScript 严格模式全量类型标注；ESLint + Prettier + Oxlint 代码质量保障；`unplugin-auto-import` + `unplugin-vue-components` 实现 Element Plus 组件与 API 按需自动导入，减小打包体积。
 
 ## 六、本地运行
 
 ### 环境要求
 
-- Node.js `^20.19.0 || >=22.12.0`
+- Node.js >= 18
 - pnpm / npm
 
 ### 安装与运行
