@@ -4,12 +4,20 @@
 
 统一账号权限管理平台是一个独立开发并部署上线的账号权限管理后台，覆盖统一注册登录、登录态管理、普通用户 / 管理员两级权限分级，以及管理员侧的用户管理与运营数据看板。平台刻意保持轻量：用户侧只有注册与登录，用户数据的维护与统计集中在管理端完成。前后端分离，本仓库为前端部分；后端为 Spring Boot 服务（不在本仓库内）。
 
-## 二、在线演示
+## 二、技术架构
 
-- 演示地址：<https://www.mydaydream.top/account-center/>
-- 截图：（此处放置平台首页 / 数据看板截图）
-
-> 测试账号：管理员账号 `admin`（密码不随仓库公开，如需体验请联系部署者开通测试账号）。
+| 类别      | 技术                                                        |
+| --------- | ----------------------------------------------------------- |
+| 框架      | Vue 3（Composition API + `<script setup>`）                  |
+| 语言      | TypeScript（严格模式，`noUncheckedIndexedAccess`）           |
+| 构建      | Vite                                                        |
+| UI 组件库 | Element Plus（CSS 变量深度定制品牌主题，亮 / 暗双模式）      |
+| 图表      | ECharts（`echarts/core` 按需引入，Line + Pie + Canvas）      |
+| 路由      | Vue Router 5（History 模式 + 全局守卫权限拦截）             |
+| HTTP 请求 | Axios（baseURL 环境切换 + 请求 / 响应拦截器）                |
+| 状态管理  | Pinia（登录用户状态与权限信息）                              |
+| 代码规范  | ESLint + Prettier + Oxlint                                   |
+| 按需导入  | `unplugin-auto-import` + `unplugin-vue-components`          |
 
 ## 三、项目结构
 
@@ -44,22 +52,7 @@ src/                              # 前端源码目录
 └── main.ts                       # 入口文件
 ```
 
-## 四、技术架构
-
-| 类别      | 技术                                                        |
-| --------- | ----------------------------------------------------------- |
-| 框架      | Vue 3（Composition API + `<script setup>`）                  |
-| 语言      | TypeScript（严格模式，`noUncheckedIndexedAccess`）           |
-| 构建      | Vite                                                        |
-| UI 组件库 | Element Plus（CSS 变量深度定制品牌主题，亮 / 暗双模式）      |
-| 图表      | ECharts（`echarts/core` 按需引入，Line + Pie + Canvas）      |
-| 路由      | Vue Router 5（History 模式 + 全局守卫权限拦截）             |
-| HTTP 请求 | Axios（baseURL 环境切换 + 请求 / 响应拦截器）                |
-| 状态管理  | Pinia（登录用户状态与权限信息）                              |
-| 代码规范  | ESLint + Prettier + Oxlint                                   |
-| 按需导入  | `unplugin-auto-import` + `unplugin-vue-components`          |
-
-## 五、功能清单
+## 四、功能清单
 
 ### 用户模块
 
@@ -88,7 +81,7 @@ src/                              # 前端源码目录
 - 数据来自现有用户列表接口，纯前端聚合计算（map / reduce），零后端改动
 - 亮 / 暗双主题适配，随全局主题一键切换
 
-## 六、技术要点
+## 五、技术要点
 
 - **三层权限防护链路**：Pinia Store 管理登录用户状态与角色 → Vue Router `beforeEach` 全局守卫拦截未授权访问 `/admin/*` → Axios 响应拦截器兜底捕获未登录业务码并全局跳转登录页（携带 `redirect` 参数实现登录后回跳）。
 - **登录跳转循环防护**：响应拦截器区分「获取当前用户」接口与其他接口的未登录响应，仅对业务接口跳转，避免 `current` 接口反复触发重定向形成死循环。
@@ -98,7 +91,7 @@ src/                              # 前端源码目录
 - **ECharts 按需引入**：仅注册 LineChart、PieChart 与 Grid / Tooltip / Legend 等必要组件，配合 `unplugin` 系列插件按需自动导入，有效控制打包体积。
 - **图表主题联动**：数据看板通过 MutationObserver 监听 `html.theme-dark` 类名变化，主题切换时从 CSS 变量读取配色重新渲染图表；`init` 置于 `onMounted`、`dispose` 置于 `onBeforeUnmount`，并监听窗口 resize，杜绝内存泄漏。
 
-## 七、本地运行
+## 六、本地运行
 
 ### 环境要求
 
